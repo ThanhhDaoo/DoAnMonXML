@@ -1,0 +1,15 @@
+D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.csproj.AssemblyReference.cache
+D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.Forms.FormMain.resources
+D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.Properties.Resources.resources
+D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.csproj.GenerateResource.cache
+D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.csproj.CoreCompileInputs.cache
+D:\CongNgheXMl\LibraryManagement\bin\Debug\LibraryManagement.exe.config
+D:\CongNgheXMl\LibraryManagement\bin\Debug\LibraryManagement.exe
+D:\CongNgheXMl\LibraryManagement\bin\Debug\LibraryManagement.pdb
+D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.Forms.FormBooks.resources
+D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.Forms.FormLoans.resources
+D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.Forms.FormLogin.resources
+D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.Forms.FormMembers.resources
+D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.exe
+D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.pdb
+D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.exe.config

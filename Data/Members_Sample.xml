@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MembersList ExportDate="2024-11-09 10:00:00" TotalMembers="5">
+	<Member>
+		<MemberID>201</MemberID>
+		<FullName>Nguyễn Thị Hoa</FullName>
+		<Email>hoa.nguyen@gmail.com</Email>
+		<Phone>0901234567</Phone>
+		<Address>123 Đường Lý Thường Kiệt, Quận Hải Châu, Đà Nẵng</Address>
+		<JoinDate>2024-01-15</JoinDate>
+		<Status>Active</Status>
+	</Member>
+	<Member>
+		<MemberID>202</MemberID>
+		<FullName>Trần Văn Minh</FullName>
+		<Email>minh.tran@email.com</Email>
+		<Phone>0912345678</Phone>
+		<Address>456 Đường Hùng Vương, Quận Thanh Khê, Đà Nẵng</Address>
+		<JoinDate>2024-02-20</JoinDate>
+		<Status>Active</Status>
+	</Member>
+	<Member>
+		<MemberID>203</MemberID>
+		<FullName>Lê Thị Lan</FullName>
+		<Email>lan.le@yahoo.com</Email>
+		<Phone>0923456789</Phone>
+		<Address>789 Đường Trần Phú, Quận Sơn Trà, Đà Nẵng</Address>
+		<JoinDate>2024-03-10</JoinDate>
+		<Status>Active</Status>
+	</Member>
+	<Member>
+		<MemberID>204</MemberID>
+		<FullName>Phạm Văn Tuấn</FullName>
+		<Email>tuan.pham@outlook.com</Email>
+		<Phone>0934567890</Phone>
+		<Address>321 Đường Nguyễn Văn Linh, Quận Ngũ Hành Sơn, Đà Nẵng</Address>
+		<JoinDate>2024-04-05</JoinDate>
+		<Status>Active</Status>
+	</Member>
+	<Member>
+		<MemberID>205</MemberID>
+		<FullName>Hoàng Thị Mai</FullName>
+		<Email>mai.hoang@hotmail.com</Email>
+		<Phone>0945678901</Phone>
+		<Address>654 Đường Điện Biên Phủ, Quận Cẩm Lệ, Đà Nẵng</Address>
+		<JoinDate>2024-05-18</JoinDate>
+		<Status>Inactive</Status>
+	</Member>
+</MembersList>

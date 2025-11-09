@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LoansList ExportDate="2024-11-09 10:00:00">
+	<Loan>
+		<LoanID>301</LoanID>
+		<BookID>1</BookID>
+		<MemberID>1</MemberID>
+		<LoanDate>2024-10-01</LoanDate>
+		<DueDate>2024-10-15</DueDate>
+		<ReturnDate>2024-10-14</ReturnDate>
+		<Status>Returned</Status>
+		<Notes>Trả đúng hạn</Notes>
+	</Loan>
+	<Loan>
+		<LoanID>302</LoanID>
+		<BookID>2</BookID>
+		<MemberID>2</MemberID>
+		<LoanDate>2024-10-10</LoanDate>
+		<DueDate>2024-10-24</DueDate>
+		<ReturnDate></ReturnDate>
+		<Status>Borrowed</Status>
+		<Notes>Đang mượn</Notes>
+	</Loan>
+	<Loan>
+		<LoanID>303</LoanID>
+		<BookID>3</BookID>
+		<MemberID>3</MemberID>
+		<LoanDate>2024-10-20</LoanDate>
+		<DueDate>2024-11-03</DueDate>
+		<ReturnDate></ReturnDate>
+		<Status>Borrowed</Status>
+		<Notes></Notes>
+	</Loan>
+	<Loan>
+		<LoanID>304</LoanID>
+		<BookID>4</BookID>
+		<MemberID>1</MemberID>
+		<LoanDate>2024-09-15</LoanDate>
+		<DueDate>2024-09-29</DueDate>
+		<ReturnDate></ReturnDate>
+		<Status>Overdue</Status>
+		<Notes>Quá hạn 41 ngày</Notes>
+	</Loan>
+	<Loan>
+		<LoanID>305</LoanID>
+		<BookID>5</BookID>
+		<MemberID>2</MemberID>
+		<LoanDate>2024-10-25</LoanDate>
+		<DueDate>2024-11-08</DueDate>
+		<ReturnDate></ReturnDate>
+		<Status>Borrowed</Status>
+		<Notes>Sách mới mượn</Notes>
+	</Loan>
+</LoansList>

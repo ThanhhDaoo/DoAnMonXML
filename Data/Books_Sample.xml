@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Library ExportDate="2024-11-09 10:00:00" TotalBooks="5">
+	<Book>
+		<BookID>101</BookID>
+		<Title>Lập trình Python từ cơ bản đến nâng cao</Title>
+		<Author>Nguyễn Văn Python</Author>
+		<Publisher>NXB Lập Trình</Publisher>
+		<PublishYear>2023</PublishYear>
+		<Category>Công nghệ</Category>
+		<Quantity>15</Quantity>
+		<ISBN>978-6041112233</ISBN>
+		<Description>Sách hướng dẫn lập trình Python cho người mới bắt đầu</Description>
+	</Book>
+	<Book>
+		<BookID>102</BookID>
+		<Title>Học Machine Learning với TensorFlow</Title>
+		<Author>Trần Thị AI</Author>
+		<Publisher>NXB Khoa Học</Publisher>
+		<PublishYear>2024</PublishYear>
+		<Category>AI/ML</Category>
+		<Quantity>8</Quantity>
+		<ISBN>978-6041223344</ISBN>
+		<Description>Hướng dẫn xây dựng mô hình Machine Learning với TensorFlow</Description>
+	</Book>
+	<Book>
+		<BookID>103</BookID>
+		<Title>Thiết kế Web Responsive với Bootstrap</Title>
+		<Author>Lê Văn Web</Author>
+		<Publisher>NXB Công Nghệ</Publisher>
+		<PublishYear>2023</PublishYear>
+		<Category>Web Development</Category>
+		<Quantity>12</Quantity>
+		<ISBN>978-6041334455</ISBN>
+		<Description>Xây dựng website responsive đẹp với Bootstrap 5</Description>
+	</Book>
+	<Book>
+		<BookID>104</BookID>
+		<Title>Quản trị Cơ sở dữ liệu MySQL</Title>
+		<Author>Phạm Thị Database</Author>
+		<Publisher>NXB Giáo Dục</Publisher>
+		<PublishYear>2022</PublishYear>
+		<Category>Database</Category>
+		<Quantity>10</Quantity>
+		<ISBN>978-6041445566</ISBN>
+		<Description>Hướng dẫn thiết kế và quản trị CSDL MySQL</Description>
+	</Book>
+	<Book>
+		<BookID>105</BookID>
+		<Title>Nghệ thuật code sạch - Clean Code</Title>
+		<Author>Robert C. Martin</Author>
+		<Publisher>NXB Thống Kê</Publisher>
+		<PublishYear>2021</PublishYear>
+		<Category>Software Engineering</Category>
+		<Quantity>20</Quantity>
+		<ISBN>978-6041556677</ISBN>
+		<Description>Hướng dẫn viết code chuyên nghiệp và dễ bảo trì</Description>
+	</Book>
+</Library>
