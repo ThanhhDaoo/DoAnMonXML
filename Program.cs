@@ -72,11 +72,14 @@ namespace LibraryManagement
             // ====================================================
             try
             {
-                // Khởi chạy Form Login (Form đăng nhập)
-                Application.Run(new FormLogin());
+                // Khởi chạy Form Login HIỆN ĐẠI (Modern UI)
+                Application.Run(new FormLoginModern());
 
-                // HOẶC nếu muốn bỏ qua đăng nhập (cho debug), dùng dòng dưới:
-                // Application.Run(new FormMain("Admin", "Admin"));
+                // HOẶC nếu muốn dùng form cũ:
+                // Application.Run(new FormLogin());
+
+                // HOẶC nếu muốn bỏ qua đăng nhập (cho debug):
+                // Application.Run(new FormMainModern("Admin", "Admin"));
             }
             catch (Exception ex)
             {

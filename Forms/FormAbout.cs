@@ -205,9 +205,19 @@ namespace LibraryManagement.Forms
         private void InitializeComponent()
         {
             this.SuspendLayout();
+            // 
+            // FormAbout
+            // 
             this.ClientSize = new System.Drawing.Size(700, 650);
             this.Name = "FormAbout";
+            this.Load += new System.EventHandler(this.FormAbout_Load);
             this.ResumeLayout(false);
+
+        }
+
+        private void FormAbout_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

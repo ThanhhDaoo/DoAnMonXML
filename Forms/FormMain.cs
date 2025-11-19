@@ -21,17 +21,18 @@ namespace LibraryManagement.Forms
         {
             // Cấu hình Form
             this.Text = "Hệ Thống Quản Lý Thư Viện";
-            this.Size = new Size(1000, 600);
+            this.Size = new Size(1200, 700);
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.BackColor = Color.FromArgb(240, 244, 248);
+            this.BackColor = Color.FromArgb(236, 240, 241);
             this.IsMdiContainer = true;
+            this.WindowState = FormWindowState.Maximized;
 
-            // Menu Strip
+            // Menu Strip với gradient
             MenuStrip menuStrip = new MenuStrip();
-            menuStrip.BackColor = Color.FromArgb(52, 73, 94);
+            menuStrip.BackColor = Color.FromArgb(44, 62, 80);
             menuStrip.ForeColor = Color.White;
             menuStrip.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            menuStrip.Padding = new Padding(10, 5, 0, 5);
+            menuStrip.Padding = new Padding(15, 8, 0, 8);
 
             // Menu Hệ thống
             ToolStripMenuItem menuSystem = new ToolStripMenuItem("⚙️ Hệ thống");
@@ -80,65 +81,108 @@ namespace LibraryManagement.Forms
             statusStrip.Items.Add(lblRole);
             statusStrip.Items.Add(lblTime);
 
-            // Panel chính
+            // Panel chính với gradient background
             Panel mainPanel = new Panel();
             mainPanel.Dock = DockStyle.Fill;
             mainPanel.BackColor = Color.White;
+            mainPanel.Paint += (s, e) =>
+            {
+                System.Drawing.Drawing2D.LinearGradientBrush brush = new System.Drawing.Drawing2D.LinearGradientBrush(
+                    mainPanel.ClientRectangle,
+                    Color.FromArgb(236, 240, 241),
+                    Color.FromArgb(255, 255, 255),
+                    90f);
+                e.Graphics.FillRectangle(brush, mainPanel.ClientRectangle);
+            };
+
+            // Header Panel
+            Panel headerPanel = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 180,
+                BackColor = Color.Transparent
+            };
 
             // Logo và tiêu đề
             Label lblTitle = new Label();
             lblTitle.Text = "📚 HỆ THỐNG QUẢN LÝ THƯ VIỆN";
-            lblTitle.Font = new Font("Segoe UI", 28, FontStyle.Bold);
-            lblTitle.ForeColor = Color.FromArgb(41, 128, 185);
-            lblTitle.Size = new Size(800, 60);
-            lblTitle.Location = new Point(100, 80);
+            lblTitle.Font = new Font("Segoe UI", 32, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(44, 62, 80);
+            lblTitle.AutoSize = false;
+            lblTitle.Size = new Size(900, 70);
+            lblTitle.Location = new Point((this.Width - 900) / 2, 30);
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            lblTitle.Anchor = AnchorStyles.Top;
 
             Label lblWelcome = new Label();
-            lblWelcome.Text = "Xin chào, " + userName + "! Chào mừng bạn đến với hệ thống.";
+            lblWelcome.Text = "Xin chào, " + userName + "! 👋 Chào mừng bạn đến với hệ thống";
             lblWelcome.Font = new Font("Segoe UI", 14);
             lblWelcome.ForeColor = Color.FromArgb(127, 140, 141);
-            lblWelcome.Size = new Size(800, 40);
-            lblWelcome.Location = new Point(100, 150);
+            lblWelcome.AutoSize = false;
+            lblWelcome.Size = new Size(900, 40);
+            lblWelcome.Location = new Point((this.Width - 900) / 2, 100);
             lblWelcome.TextAlign = ContentAlignment.MiddleCenter;
+            lblWelcome.Anchor = AnchorStyles.Top;
 
-            // Các nút chức năng chính
-            int btnY = 220;
-            int btnSpacing = 110;
+            headerPanel.Controls.AddRange(new Control[] { lblTitle, lblWelcome });
 
-            Button btnBooks = CreateDashboardButton("📚\n\nQuản lý\nSách", 200, btnY, Color.FromArgb(52, 152, 219));
-            btnBooks.Click += MenuBooks_Click;
+            // Cards Container
+            FlowLayoutPanel cardsPanel = new FlowLayoutPanel
+            {
+                Location = new Point(50, 200),
+                Size = new Size(1100, 350),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                BackColor = Color.Transparent
+            };
 
-            Button btnMembers = CreateDashboardButton("👥\n\nQuản lý\nĐộc giả", 200 + btnSpacing, btnY, Color.FromArgb(46, 204, 113));
-            btnMembers.Click += MenuMembers_Click;
+            // Tạo các card với hiệu ứng đẹp
+            Panel cardBooks = CreateModernCard("📚", "Quản lý Sách", "Thêm, sửa, xóa thông tin sách", 
+                Color.FromArgb(52, 152, 219), Color.FromArgb(41, 128, 185), MenuBooks_Click);
 
-            Button btnLoans = CreateDashboardButton("📝\n\nMượn/Trả\nSách", 200 + btnSpacing * 2, btnY, Color.FromArgb(155, 89, 182));
-            btnLoans.Click += MenuLoans_Click;
+            Panel cardMembers = CreateModernCard("👥", "Quản lý Độc giả", "Quản lý thông tin độc giả", 
+                Color.FromArgb(46, 204, 113), Color.FromArgb(39, 174, 96), MenuMembers_Click);
 
-            Button btnReport = CreateDashboardButton("📊\n\nBáo cáo\nThống kê", 200 + btnSpacing * 3, btnY, Color.FromArgb(230, 126, 34));
-            btnReport.Click += MenuReportBooks_Click;
+            Panel cardLoans = CreateModernCard("📝", "Mượn/Trả Sách", "Xử lý mượn và trả sách", 
+                Color.FromArgb(155, 89, 182), Color.FromArgb(142, 68, 173), MenuLoans_Click);
 
-            // Thông tin hướng dẫn
+            Panel cardReport = CreateModernCard("📊", "Báo cáo", "Thống kê và báo cáo", 
+                Color.FromArgb(230, 126, 34), Color.FromArgb(211, 84, 0), MenuReportBooks_Click);
+
+            cardsPanel.Controls.AddRange(new Control[] { cardBooks, cardMembers, cardLoans, cardReport });
+
+            // Info Panel
+            Panel infoPanel = new Panel
+            {
+                Location = new Point(50, 560),
+                Size = new Size(1100, 100),
+                BackColor = Color.White,
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+            };
+            infoPanel.Paint += (s, e) =>
+            {
+                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+                path.AddArc(0, 0, 15, 15, 180, 90);
+                path.AddArc(infoPanel.Width - 15, 0, 15, 15, 270, 90);
+                path.AddArc(infoPanel.Width - 15, infoPanel.Height - 15, 15, 15, 0, 90);
+                path.AddArc(0, infoPanel.Height - 15, 15, 15, 90, 90);
+                path.CloseFigure();
+                infoPanel.Region = new Region(path);
+            };
+
             Label lblInfo = new Label();
-            lblInfo.Text = "💡 Sử dụng menu ở trên hoặc click vào các nút bên dưới để bắt đầu làm việc.\n\n" +
-                           "✨ Tính năng nổi bật:\n" +
-                           "   • Import/Export dữ liệu với XML\n" +
-                           "   • Quản lý Sách, Độc giả và Mượn/Trả\n" +
-                           "   • Báo cáo và thống kê chi tiết\n" +
-                           "   • Giao diện hiện đại và thân thiện";
-            lblInfo.Font = new Font("Segoe UI", 10);
+            lblInfo.Text = "💡 Tính năng: Import/Export XML • Quản lý toàn diện • Báo cáo chi tiết • Giao diện hiện đại";
+            lblInfo.Font = new Font("Segoe UI", 11);
             lblInfo.ForeColor = Color.FromArgb(149, 165, 166);
-            lblInfo.Size = new Size(800, 120);
-            lblInfo.Location = new Point(100, 350);
-            lblInfo.TextAlign = ContentAlignment.TopCenter;
+            lblInfo.AutoSize = false;
+            lblInfo.Size = new Size(1080, 80);
+            lblInfo.Location = new Point(10, 10);
+            lblInfo.TextAlign = ContentAlignment.MiddleCenter;
+            infoPanel.Controls.Add(lblInfo);
 
-            mainPanel.Controls.Add(lblTitle);
-            mainPanel.Controls.Add(lblWelcome);
-            mainPanel.Controls.Add(btnBooks);
-            mainPanel.Controls.Add(btnMembers);
-            mainPanel.Controls.Add(btnLoans);
-            mainPanel.Controls.Add(btnReport);
-            mainPanel.Controls.Add(lblInfo);
+            mainPanel.Controls.Add(headerPanel);
+            mainPanel.Controls.Add(cardsPanel);
+            mainPanel.Controls.Add(infoPanel);
 
             // Thêm controls vào form
             this.MainMenuStrip = menuStrip;
@@ -157,19 +201,151 @@ namespace LibraryManagement.Forms
             return item;
         }
 
-        private Button CreateDashboardButton(string text, int x, int y, Color backColor)
+        private Panel CreateModernCard(string icon, string title, string description, Color color1, Color color2, EventHandler clickHandler = null)
         {
-            Button btn = new Button();
-            btn.Text = text;
-            btn.Location = new Point(x, y);
-            btn.Size = new Size(100, 100);
-            btn.BackColor = backColor;
-            btn.ForeColor = Color.White;
-            btn.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            btn.FlatStyle = FlatStyle.Flat;
-            btn.Cursor = Cursors.Hand;
-            btn.FlatAppearance.BorderSize = 0;
-            return btn;
+            Panel card = new Panel
+            {
+                Size = new Size(250, 300),
+                BackColor = Color.White,
+                Cursor = Cursors.Hand,
+                Margin = new Padding(15)
+            };
+
+            // Attach click handler to card if provided
+            if (clickHandler != null)
+            {
+                card.Click += clickHandler;
+            }
+
+            // Rounded corners và shadow effect
+            card.Paint += (s, e) =>
+            {
+                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+                path.AddArc(0, 0, 20, 20, 180, 90);
+                path.AddArc(card.Width - 20, 0, 20, 20, 270, 90);
+                path.AddArc(card.Width - 20, card.Height - 20, 20, 20, 0, 90);
+                path.AddArc(0, card.Height - 20, 20, 20, 90, 90);
+                path.CloseFigure();
+                card.Region = new Region(path);
+
+                // Draw shadow
+                using (System.Drawing.Drawing2D.GraphicsPath shadowPath = new System.Drawing.Drawing2D.GraphicsPath())
+                {
+                    shadowPath.AddArc(3, 3, 20, 20, 180, 90);
+                    shadowPath.AddArc(card.Width - 17, 3, 20, 20, 270, 90);
+                    shadowPath.AddArc(card.Width - 17, card.Height - 17, 20, 20, 0, 90);
+                    shadowPath.AddArc(3, card.Height - 17, 20, 20, 90, 90);
+                    shadowPath.CloseFigure();
+                }
+            };
+
+            // Header với gradient
+            Panel header = new Panel
+            {
+                Size = new Size(250, 120),
+                Location = new Point(0, 0),
+                BackColor = color1
+            };
+            header.Paint += (s, e) =>
+            {
+                System.Drawing.Drawing2D.LinearGradientBrush brush = new System.Drawing.Drawing2D.LinearGradientBrush(
+                    header.ClientRectangle, color1, color2, 45f);
+                e.Graphics.FillRectangle(brush, header.ClientRectangle);
+            };
+
+            Label lblIcon = new Label
+            {
+                Text = icon,
+                Font = new Font("Segoe UI", 48),
+                Size = new Size(250, 120),
+                TextAlign = ContentAlignment.MiddleCenter,
+                BackColor = Color.Transparent,
+                ForeColor = Color.White
+            };
+            header.Controls.Add(lblIcon);
+
+            Label lblTitle = new Label
+            {
+                Text = title,
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                Size = new Size(230, 40),
+                Location = new Point(10, 135),
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.FromArgb(44, 62, 80)
+            };
+
+            Label lblDesc = new Label
+            {
+                Text = description,
+                Font = new Font("Segoe UI", 10),
+                Size = new Size(230, 60),
+                Location = new Point(10, 180),
+                TextAlign = ContentAlignment.TopCenter,
+                ForeColor = Color.FromArgb(149, 165, 166)
+            };
+
+            Panel btnPanel = new Panel
+            {
+                Size = new Size(200, 45),
+                Location = new Point(25, 245),
+                BackColor = color1
+            };
+            btnPanel.Paint += (s, e) =>
+            {
+                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+                path.AddArc(0, 0, 10, 10, 180, 90);
+                path.AddArc(btnPanel.Width - 10, 0, 10, 10, 270, 90);
+                path.AddArc(btnPanel.Width - 10, btnPanel.Height - 10, 10, 10, 0, 90);
+                path.AddArc(0, btnPanel.Height - 10, 10, 10, 90, 90);
+                path.CloseFigure();
+                btnPanel.Region = new Region(path);
+            };
+
+            Label lblButton = new Label
+            {
+                Text = "Mở →",
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                Size = new Size(200, 45),
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.White,
+                BackColor = Color.Transparent,
+                Cursor = Cursors.Hand
+            };
+            btnPanel.Controls.Add(lblButton);
+
+            card.Controls.AddRange(new Control[] { header, lblTitle, lblDesc, btnPanel });
+
+            // Hover effects
+            card.MouseEnter += (s, e) =>
+            {
+                card.BackColor = Color.FromArgb(245, 245, 245);
+                btnPanel.BackColor = color2;
+            };
+            card.MouseLeave += (s, e) =>
+            {
+                card.BackColor = Color.White;
+                btnPanel.BackColor = color1;
+            };
+
+            // Click event propagation - Make child controls trigger card's click event
+            if (clickHandler != null)
+            {
+                foreach (Control ctrl in card.Controls)
+                {
+                    ctrl.Click += clickHandler;
+                    if (ctrl.HasChildren)
+                    {
+                        foreach (Control child in ctrl.Controls)
+                        {
+                            child.Click += clickHandler;
+                        }
+                    }
+                }
+            }
+
+            return card;
         }
 
         // XỬ LÝ SỰ KIỆN MENU
