@@ -297,30 +297,19 @@ namespace LibraryManagement.Forms
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtTitle.Text))
+            try
             {
-                MessageBox.Show("Vui lòng nhập tên sách!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                using (FormBookDialog dialog = new FormBookDialog())
+                {
+                    if (dialog.ShowDialog(this) == DialogResult.OK)
+                    {
+                        LoadData();
+                    }
+                }
             }
-
-            string query = @"INSERT INTO Books (Title, Author, Publisher, PublishYear, Category, Quantity, ISBN, Description)
-                           VALUES (@Title, @Author, @Publisher, @PublishYear, @Category, @Quantity, @ISBN, @Description)";
-
-            SqlParameter[] parameters = {
-                new SqlParameter("@Title", txtTitle.Text),
-                new SqlParameter("@Author", txtAuthor.Text),
-                new SqlParameter("@Publisher", txtPublisher.Text),
-                new SqlParameter("@PublishYear", int.TryParse(txtPublishYear.Text, out int year) ? year : 0),
-                new SqlParameter("@Category", txtCategory.Text),
-                new SqlParameter("@Quantity", int.TryParse(txtQuantity.Text, out int qty) ? qty : 0),
-                new SqlParameter("@ISBN", txtISBN.Text),
-                new SqlParameter("@Description", txtDescription.Text)
-            };
-
-            if (DatabaseHelper.ExecuteNonQuery(query, parameters) > 0)
+            catch (Exception ex)
             {
-                MessageBox.Show("Thêm sách thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadData();
+                MessageBox.Show($"Lỗi mở form thêm sách:\n{ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -332,26 +321,20 @@ namespace LibraryManagement.Forms
                 return;
             }
 
-            string query = @"UPDATE Books SET Title = @Title, Author = @Author, Publisher = @Publisher,
-                           PublishYear = @PublishYear, Category = @Category, Quantity = @Quantity,
-                           ISBN = @ISBN, Description = @Description WHERE BookID = @BookID";
-
-            SqlParameter[] parameters = {
-                new SqlParameter("@BookID", int.Parse(txtBookID.Text)),
-                new SqlParameter("@Title", txtTitle.Text),
-                new SqlParameter("@Author", txtAuthor.Text),
-                new SqlParameter("@Publisher", txtPublisher.Text),
-                new SqlParameter("@PublishYear", int.TryParse(txtPublishYear.Text, out int year) ? year : 0),
-                new SqlParameter("@Category", txtCategory.Text),
-                new SqlParameter("@Quantity", int.TryParse(txtQuantity.Text, out int qty) ? qty : 0),
-                new SqlParameter("@ISBN", txtISBN.Text),
-                new SqlParameter("@Description", txtDescription.Text)
-            };
-
-            if (DatabaseHelper.ExecuteNonQuery(query, parameters) > 0)
+            try
             {
-                MessageBox.Show("Cập nhật thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadData();
+                int bookID = int.Parse(txtBookID.Text);
+                using (FormBookDialog dialog = new FormBookDialog(bookID))
+                {
+                    if (dialog.ShowDialog(this) == DialogResult.OK)
+                    {
+                        LoadData();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi mở form sửa sách:\n{ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

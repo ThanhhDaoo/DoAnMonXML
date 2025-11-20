@@ -487,28 +487,19 @@ namespace LibraryManagement.Forms
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            if (cboBook.SelectedValue == null || cboMember.SelectedValue == null)
+            try
             {
-                MessageBox.Show("Vui lòng chọn sách và độc giả!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                using (FormLoanDialog dialog = new FormLoanDialog())
+                {
+                    if (dialog.ShowDialog(this) == DialogResult.OK)
+                    {
+                        LoadData();
+                    }
+                }
             }
-
-            string query = @"INSERT INTO Loans (BookID, MemberID, LoanDate, DueDate, Status, Notes)
-                           VALUES (@BookID, @MemberID, @LoanDate, @DueDate, @Status, @Notes)";
-
-            SqlParameter[] parameters = {
-                new SqlParameter("@BookID", cboBook.SelectedValue),
-                new SqlParameter("@MemberID", cboMember.SelectedValue),
-                new SqlParameter("@LoanDate", dtpLoanDate.Value.Date),
-                new SqlParameter("@DueDate", dtpDueDate.Value.Date),
-                new SqlParameter("@Status", "Borrowed"),
-                new SqlParameter("@Notes", txtNotes.Text)
-            };
-
-            if (DatabaseHelper.ExecuteNonQuery(query, parameters) > 0)
+            catch (Exception ex)
             {
-                MessageBox.Show("Thêm phiếu mượn thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadData();
+                MessageBox.Show($"Lỗi mở form mượn sách:\n{ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

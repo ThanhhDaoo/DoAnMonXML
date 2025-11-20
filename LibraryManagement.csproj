@@ -95,6 +95,16 @@
     <Compile Include="Forms\FormReportLoansModern.cs">
       <SubType>Form</SubType>
     </Compile>
+    <!-- Dialog Forms -->
+    <Compile Include="Forms\FormBookDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMemberDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormLoanDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <!-- Helpers -->
     <Compile Include="Helpers\DatabaseHelper.cs" />
     <Compile Include="Helpers\XMLHelper.cs" />
@@ -107,6 +117,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormBookDialog.resx">
+      <DependentUpon>FormBookDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormBooks.resx">
       <DependentUpon>FormBooks.cs</DependentUpon>

@@ -334,30 +334,12 @@ namespace LibraryManagement.Forms
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            if (cboBook.SelectedValue == null || cboMember.SelectedValue == null)
+            using (FormLoanDialog dialog = new FormLoanDialog())
             {
-                MessageBox.Show("Vui lòng chọn sách và độc giả!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            string query = @"INSERT INTO Loans (BookID, MemberID, LoanDate, DueDate, Status, Notes)
-                           VALUES (@BookID, @MemberID, @LoanDate, @DueDate, @Status, @Notes)";
-
-            SqlParameter[] parameters = {
-                new SqlParameter("@BookID", cboBook.SelectedValue),
-                new SqlParameter("@MemberID", cboMember.SelectedValue),
-                new SqlParameter("@LoanDate", dtpLoanDate.Value.Date),
-                new SqlParameter("@DueDate", dtpDueDate.Value.Date),
-                new SqlParameter("@Status", "Borrowed"),
-                new SqlParameter("@Notes", txtNotes.Text)
-            };
-
-            if (DatabaseHelper.ExecuteNonQuery(query, parameters) > 0)
-            {
-                MessageBox.Show("Thêm phiếu mượn thành công!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadData();
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    LoadData();
+                }
             }
         }
 

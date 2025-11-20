@@ -369,28 +369,19 @@ namespace LibraryManagement.Forms
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtFullName.Text))
+            try
             {
-                MessageBox.Show("Vui lòng nhập họ tên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                using (FormMemberDialog dialog = new FormMemberDialog())
+                {
+                    if (dialog.ShowDialog(this) == DialogResult.OK)
+                    {
+                        LoadData();
+                    }
+                }
             }
-
-            string query = @"INSERT INTO Members (FullName, Email, Phone, Address, JoinDate, Status)
-                           VALUES (@FullName, @Email, @Phone, @Address, @JoinDate, @Status)";
-
-            SqlParameter[] parameters = {
-                new SqlParameter("@FullName", txtFullName.Text),
-                new SqlParameter("@Email", txtEmail.Text),
-                new SqlParameter("@Phone", txtPhone.Text),
-                new SqlParameter("@Address", txtAddress.Text),
-                new SqlParameter("@JoinDate", dtpJoinDate.Value.Date),
-                new SqlParameter("@Status", cboStatus.SelectedItem.ToString())
-            };
-
-            if (DatabaseHelper.ExecuteNonQuery(query, parameters) > 0)
+            catch (Exception ex)
             {
-                MessageBox.Show("Thêm độc giả thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadData();
+                MessageBox.Show($"Lỗi mở form thêm độc giả:\n{ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -402,24 +393,20 @@ namespace LibraryManagement.Forms
                 return;
             }
 
-            string query = @"UPDATE Members SET FullName = @FullName, Email = @Email, 
-                           Phone = @Phone, Address = @Address, JoinDate = @JoinDate, Status = @Status
-                           WHERE MemberID = @MemberID";
-
-            SqlParameter[] parameters = {
-                new SqlParameter("@MemberID", int.Parse(txtMemberID.Text)),
-                new SqlParameter("@FullName", txtFullName.Text),
-                new SqlParameter("@Email", txtEmail.Text),
-                new SqlParameter("@Phone", txtPhone.Text),
-                new SqlParameter("@Address", txtAddress.Text),
-                new SqlParameter("@JoinDate", dtpJoinDate.Value.Date),
-                new SqlParameter("@Status", cboStatus.SelectedItem.ToString())
-            };
-
-            if (DatabaseHelper.ExecuteNonQuery(query, parameters) > 0)
+            try
             {
-                MessageBox.Show("Cập nhật thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadData();
+                int memberID = int.Parse(txtMemberID.Text);
+                using (FormMemberDialog dialog = new FormMemberDialog(memberID))
+                {
+                    if (dialog.ShowDialog(this) == DialogResult.OK)
+                    {
+                        LoadData();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi mở form sửa độc giả:\n{ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
