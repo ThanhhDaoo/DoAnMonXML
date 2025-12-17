@@ -208,7 +208,7 @@ namespace LibraryManagement.Helpers
                 Text = title,
                 Font = new Font("Segoe UI", 24, FontStyle.Bold),
                 ForeColor = Colors.White,
-                Location = new Point(30, 20),
+                Location = new Point(30, 15),
                 AutoSize = true,
                 BackColor = Color.Transparent
             };
@@ -217,9 +217,9 @@ namespace LibraryManagement.Helpers
             {
                 Text = subtitle,
                 Font = new Font("Segoe UI", 11),
-                ForeColor = Color.FromArgb(220, 220, 220),
-                Location = new Point(30, 55),
-                AutoSize = true,
+                ForeColor = Color.FromArgb(240, 240, 240),
+                Location = new Point(30, 58),
+                Size = new Size(800, 25),
                 BackColor = Color.Transparent
             };
 
@@ -241,13 +241,15 @@ namespace LibraryManagement.Helpers
             dgv.Font = new Font("Segoe UI", 10);
             dgv.RowTemplate.Height = 40;
             dgv.EnableHeadersVisualStyles = false;
+            dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 
             // Header style
             dgv.ColumnHeadersDefaultCellStyle.BackColor = headerColor;
             dgv.ColumnHeadersDefaultCellStyle.ForeColor = Colors.White;
             dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 11, FontStyle.Bold);
-            dgv.ColumnHeadersDefaultCellStyle.Padding = new Padding(5);
-            dgv.ColumnHeadersHeight = 45;
+            dgv.ColumnHeadersDefaultCellStyle.Padding = new Padding(8, 10, 8, 10);
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv.ColumnHeadersHeight = 50;
 
             // Row style
             dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 250);

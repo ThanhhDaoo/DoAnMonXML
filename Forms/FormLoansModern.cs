@@ -50,11 +50,16 @@ namespace LibraryManagement.Forms
                 Dock = DockStyle.Top,
                 Height = 90,
                 BackColor = Color.White,
-                Padding = new Padding(30, 20, 30, 20)
+                Padding = new Padding(30, 20, 30, 20),
+                AutoScroll = true
             };
 
-            Panel searchBox = ModernUIHelper.CreateSearchBox("Tìm kiếm theo sách, độc giả, trạng thái...", 400);
-            searchBox.Location = new Point(30, 20);
+            Button btnBack = ModernUIHelper.CreateIconButton("◀", "Quay lại", ModernUIHelper.Colors.Gray, 120);
+            btnBack.Location = new Point(0, 20);
+            btnBack.Click += (s, e) => this.Close();
+
+            Panel searchBox = ModernUIHelper.CreateSearchBox("Tìm kiếm theo sách, độc giả, trạng thái...", 320);
+            searchBox.Location = new Point(130, 20);
             txtSearch = (TextBox)searchBox.Tag;
             txtSearch.TextChanged += (s, e) =>
             {
@@ -62,32 +67,32 @@ namespace LibraryManagement.Forms
                     SearchLoans();
             };
 
-            Button btnAdd = ModernUIHelper.CreateIconButton("➕", "Mượn sách", ModernUIHelper.Colors.Success, 130);
+            Button btnAdd = ModernUIHelper.CreateIconButton("➕", "Mượn sách", ModernUIHelper.Colors.Success, 120);
             btnAdd.Location = new Point(460, 20);
             btnAdd.Click += BtnAdd_Click;
 
-            Button btnReturn = ModernUIHelper.CreateIconButton("✅", "Trả sách", ModernUIHelper.Colors.Primary, 130);
-            btnReturn.Location = new Point(610, 20);
+            Button btnReturn = ModernUIHelper.CreateIconButton("✅", "Trả sách", ModernUIHelper.Colors.Primary, 120);
+            btnReturn.Location = new Point(590, 20);
             btnReturn.Click += BtnReturn_Click;
 
-            Button btnDelete = ModernUIHelper.CreateIconButton("🗑️", "Xóa", ModernUIHelper.Colors.Danger, 120);
-            btnDelete.Location = new Point(760, 20);
+            Button btnDelete = ModernUIHelper.CreateIconButton("🗑️", "Xóa", ModernUIHelper.Colors.Danger, 110);
+            btnDelete.Location = new Point(720, 20);
             btnDelete.Click += BtnDelete_Click;
 
-            Button btnRefresh = ModernUIHelper.CreateIconButton("🔄", "Làm mới", ModernUIHelper.Colors.Gray, 130);
-            btnRefresh.Location = new Point(900, 20);
+            Button btnRefresh = ModernUIHelper.CreateIconButton("🔄", "Làm mới", ModernUIHelper.Colors.Gray, 120);
+            btnRefresh.Location = new Point(840, 20);
             btnRefresh.Click += (s, e) => LoadData();
 
-            Button btnExport = ModernUIHelper.CreateIconButton("📤", "Export", ModernUIHelper.Colors.Warning, 130);
-            btnExport.Location = new Point(1050, 20);
+            Button btnExport = ModernUIHelper.CreateIconButton("📤", "Export", ModernUIHelper.Colors.Warning, 120);
+            btnExport.Location = new Point(970, 20);
             btnExport.Click += BtnExport_Click;
 
-            Button btnImport = ModernUIHelper.CreateIconButton("📥", "Import", ModernUIHelper.Colors.Info, 130);
-            btnImport.Location = new Point(1200, 20);
+            Button btnImport = ModernUIHelper.CreateIconButton("📥", "Import", ModernUIHelper.Colors.Info, 120);
+            btnImport.Location = new Point(1100, 20);
             btnImport.Click += BtnImport_Click;
 
             toolbar.Controls.AddRange(new Control[] {
-                searchBox, btnAdd, btnReturn, btnDelete, btnRefresh, btnExport, btnImport
+                btnBack, searchBox, btnAdd, btnReturn, btnDelete, btnRefresh, btnExport, btnImport
             });
 
             // Content area
@@ -95,17 +100,22 @@ namespace LibraryManagement.Forms
             {
                 Dock = DockStyle.Fill,
                 Padding = new Padding(30, 20, 30, 30),
-                BackColor = ModernUIHelper.Colors.Light
+                BackColor = ModernUIHelper.Colors.Light,
+                AutoScroll = true
             };
 
-            // DataGridView container
+            // DataGridView container - RESPONSIVE WIDTH, FIXED HEIGHT for scrolling
+            int detailsPanelWidth = 480;
+            int spacing = 20;
+            
             Panel dgvContainer = new Panel
             {
                 Location = new Point(30, 20),
-                Size = new Size(1100, 700),
+                Size = new Size(950, 700),
                 BackColor = Color.White,
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
+            
             dgvContainer.Paint += (s, e) =>
             {
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -118,21 +128,31 @@ namespace LibraryManagement.Forms
             dgvLoans = new DataGridView
             {
                 Location = new Point(15, 15),
-                Size = new Size(1070, 670),
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+                Size = new Size(920, 670),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
+            
             ModernUIHelper.StyleDataGridView(dgvLoans, ModernUIHelper.Colors.Info);
             dgvLoans.SelectionChanged += DgvLoans_SelectionChanged;
 
             dgvContainer.Controls.Add(dgvLoans);
 
-            // Details panel
+            // Details panel - RESPONSIVE WIDTH, FIXED HEIGHT for scrolling
             detailsPanel = new Panel
             {
-                Location = new Point(1150, 20),
-                Size = new Size(500, 700),
+                Location = new Point(1000, 20),
+                Size = new Size(detailsPanelWidth, 700),
                 BackColor = Color.White,
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                AutoScroll = true
+            };
+            
+            // Event resize
+            contentPanel.Resize += (s, e) =>
+            {
+                int availableWidth = contentPanel.Width - 60;
+                dgvContainer.Width = availableWidth - detailsPanelWidth - spacing;
+                detailsPanel.Left = dgvContainer.Right + spacing;
             };
             detailsPanel.Paint += (s, e) =>
             {
@@ -153,7 +173,7 @@ namespace LibraryManagement.Forms
             };
 
             int yPos = 70;
-            int spacing = 75;
+            int fieldSpacing = 75;
 
             txtLoanID = CreateDetailField("ID Phiếu:", yPos, true);
 
@@ -163,7 +183,7 @@ namespace LibraryManagement.Forms
                 Text = "Sách:",
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 ForeColor = ModernUIHelper.Colors.Dark,
-                Location = new Point(20, yPos += spacing),
+                Location = new Point(20, yPos += fieldSpacing),
                 AutoSize = true
             };
 
@@ -186,7 +206,7 @@ namespace LibraryManagement.Forms
                 Text = "Độc giả:",
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 ForeColor = ModernUIHelper.Colors.Dark,
-                Location = new Point(20, yPos += spacing),
+                Location = new Point(20, yPos += fieldSpacing),
                 AutoSize = true
             };
 
@@ -204,15 +224,15 @@ namespace LibraryManagement.Forms
             detailsPanel.Controls.Add(cboMemberPanel);
 
             // DateTimePickers
-            dtpLoanDate = CreateDateField("Ngày mượn:", yPos += spacing);
-            dtpDueDate = CreateDateField("Hạn trả:", yPos += spacing);
-            dtpReturnDate = CreateDateField("Ngày trả:", yPos += spacing);
+            dtpLoanDate = CreateDateField("Ngày mượn:", yPos += fieldSpacing);
+            dtpDueDate = CreateDateField("Hạn trả:", yPos += fieldSpacing);
+            dtpReturnDate = CreateDateField("Ngày trả:", yPos += fieldSpacing);
 
             // Checkbox Đã trả
             chkReturned = new CheckBox
             {
                 Text = "✅ Đã trả sách",
-                Location = new Point(20, yPos += spacing),
+                Location = new Point(20, yPos += fieldSpacing),
                 Size = new Size(460, 30),
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
                 ForeColor = ModernUIHelper.Colors.Success
@@ -434,13 +454,30 @@ namespace LibraryManagement.Forms
                 if (dgvLoans.Columns.Count > 0)
                 {
                     dgvLoans.Columns["LoanID"].HeaderText = "ID";
+                    dgvLoans.Columns["LoanID"].Width = 60;
+                    
                     dgvLoans.Columns["BookTitle"].HeaderText = "Tên sách";
+                    dgvLoans.Columns["BookTitle"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dgvLoans.Columns["BookTitle"].FillWeight = 150;
+                    
                     dgvLoans.Columns["MemberName"].HeaderText = "Độc giả";
+                    dgvLoans.Columns["MemberName"].Width = 150;
+                    
                     dgvLoans.Columns["LoanDate"].HeaderText = "Ngày mượn";
+                    dgvLoans.Columns["LoanDate"].Width = 100;
+                    
                     dgvLoans.Columns["DueDate"].HeaderText = "Hạn trả";
+                    dgvLoans.Columns["DueDate"].Width = 100;
+                    
                     dgvLoans.Columns["ReturnDate"].HeaderText = "Ngày trả";
+                    dgvLoans.Columns["ReturnDate"].Width = 100;
+                    
                     dgvLoans.Columns["Status"].HeaderText = "Trạng thái";
+                    dgvLoans.Columns["Status"].Width = 100;
+                    
                     dgvLoans.Columns["Notes"].HeaderText = "Ghi chú";
+                    dgvLoans.Columns["Notes"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dgvLoans.Columns["Notes"].FillWeight = 100;
 
                     dgvLoans.Columns["BookID"].Visible = false;
                     dgvLoans.Columns["MemberID"].Visible = false;

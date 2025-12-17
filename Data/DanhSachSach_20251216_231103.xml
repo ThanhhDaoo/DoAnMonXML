@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Library ExportDate="2025-12-16 23:11:06" TotalBooks="17">
+  <Book>
+    <BookID>1</BookID>
+    <Title>Lập trình C# cơ bản</Title>
+    <Author>Nguyễn Văn A</Author>
+    <Publisher>NXB Giáo dục</Publisher>
+    <PublishYear>2023</PublishYear>
+    <Category>Công nghệ</Category>
+    <Quantity>10</Quantity>
+    <ISBN>978-6041234567</ISBN>
+    <Description>Sách hướng dẫn lập trình C# từ cơ bản đến nâng cao</Description>
+  </Book>
+  <Book>
+    <BookID>2</BookID>
+    <Title>XML và Web Services</Title>
+    <Author>Trần Thị B</Author>
+    <Publisher>NXB Thống Kê</Publisher>
+    <PublishYear>2022</PublishYear>
+    <Category>Công nghệ</Category>
+    <Quantity>5</Quantity>
+    <ISBN>978-6041234568</ISBN>
+    <Description>Giới thiệu về XML và ứng dụng trong Web Services</Description>
+  </Book>
+  <Book>
+    <BookID>3</BookID>
+    <Title>Cơ sở dữ liệu SQL Server</Title>
+    <Author>Lê Văn C</Author>
+    <Publisher>NXB Đại học Quốc gia</Publisher>
+    <PublishYear>2023</PublishYear>
+    <Category>Công nghệ</Category>
+    <Quantity>8</Quantity>
+    <ISBN>978-6041234569</ISBN>
+    <Description>Hướng dẫn thiết kế và quản trị CSDL SQL Server</Description>
+  </Book>
+  <Book>
+    <BookID>4</BookID>
+    <Title>Đắc nhân tâm</Title>
+    <Author>Dale Carnegie</Author>
+    <Publisher>NXB Tổng hợp</Publisher>
+    <PublishYear>2020</PublishYear>
+    <Category>Kỹ năng sống</Category>
+    <Quantity>15</Quantity>
+    <ISBN>978-6041234570</ISBN>
+    <Description>Sách về kỹ năng giao tiếp và xây dựng mối quan hệ</Description>
+  </Book>
+  <Book>
+    <BookID>5</BookID>
+    <Title>Tôi thấy hoa vàng trên cỏ xanh</Title>
+    <Author>Nguyễn Nhật Ánh</Author>
+    <Publisher>NXB Trẻ</Publisher>
+    <PublishYear>2021</PublishYear>
+    <Category>Văn học</Category>
+    <Quantity>20</Quantity>
+    <ISBN>978-6041234571</ISBN>
+    <Description>Tiểu thuyết về tuổi thơ ở miền quê Việt Nam</Description>
+  </Book>
+  <Book>
+    <BookID>6</BookID>
+    <Title>Lập trình C# cơ bản</Title>
+    <Author>Nguyễn Văn A</Author>
+    <Publisher>NXB Giáo dục</Publisher>
+    <PublishYear>2023</PublishYear>
+    <Category>Công nghệ</Category>
+    <Quantity>10</Quantity>
+    <ISBN>978-6041234567</ISBN>
+    <Description>Sách hướng dẫn lập trình C# từ cơ bản đến nâng cao</Description>
+  </Book>
+  <Book>
+    <BookID>8</BookID>
+    <Title>Lập trình Python từ cơ bản đến nâng cao</Title>
+    <Author>Nguyễn Văn Python</Author>
+    <Publisher>NXB Lập Trình</Publisher>
+    <PublishYear>2023</PublishYear>
+    <Category>Công nghệ</Category>
+    <Quantity>15</Quantity>
+    <ISBN>978-6041112233</ISBN>
+    <Description>Sách hướng dẫn lập trình Python cho người mới bắt đầu</Description>
+  </Book>
+  <Book>
+    <BookID>9</BookID>
+    <Title>Học Machine Learning với TensorFlow</Title>
+    <Author>Trần Thị AI</Author>
+    <Publisher>NXB Khoa Học</Publisher>
+    <PublishYear>2024</PublishYear>
+    <Category>AI/ML</Category>
+    <Quantity>8</Quantity>
+    <ISBN>978-6041223344</ISBN>
+    <Description>Hướng dẫn xây dựng mô hình Machine Learning với TensorFlow</Description>
+  </Book>
+  <Book>
+    <BookID>10</BookID>
+    <Title>Thiết kế Web Responsive với Bootstrap</Title>
+    <Author>Lê Văn Web</Author>
+    <Publisher>NXB Công Nghệ</Publisher>
+    <PublishYear>2023</PublishYear>
+    <Category>Web Development</Category>
+    <Quantity>12</Quantity>
+    <ISBN>978-6041334455</ISBN>
+    <Description>Xây dựng website responsive đẹp với Bootstrap 5</Description>
+  </Book>
+  <Book>
+    <BookID>11</BookID>
+    <Title>Quản trị Cơ sở dữ liệu MySQL</Title>
+    <Author>Phạm Thị Database</Author>
+    <Publisher>NXB Giáo Dục</Publisher>
+    <PublishYear>2022</PublishYear>
+    <Category>Database</Category>
+    <Quantity>10</Quantity>
+    <ISBN>978-6041445566</ISBN>
+    <Description>Hướng dẫn thiết kế và quản trị CSDL MySQL</Description>
+  </Book>
+  <Book>
+    <BookID>12</BookID>
+    <Title>Nghệ thuật code sạch - Clean Code</Title>
+    <Author>Robert C. Martin</Author>
+    <Publisher>NXB Thống Kê</Publisher>
+    <PublishYear>2021</PublishYear>
+    <Category>Software Engineering</Category>
+    <Quantity>20</Quantity>
+    <ISBN>978-6041556677</ISBN>
+    <Description>Hướng dẫn viết code chuyên nghiệp và dễ bảo trì</Description>
+  </Book>
+  <Book>
+    <BookID>13</BookID>
+    <Title>Lập trình C# cơ bản</Title>
+    <Author>Nguyễn Văn A</Author>
+    <Publisher>NXB Giáo dục</Publisher>
+    <PublishYear>2023</PublishYear>
+    <Category>Công nghệ</Category>
+    <Quantity>10</Quantity>
+    <ISBN>978-6041234567</ISBN>
+    <Description>Sách hướng dẫn lập trình C# từ cơ bản đến nâng cao</Description>
+  </Book>
+  <Book>
+    <BookID>14</BookID>
+    <Title>Lập trình C# cơ bản</Title>
+    <Author>Nguyễn Văn A</Author>
+    <Publisher>NXB Giáo dục</Publisher>
+    <PublishYear>2023</PublishYear>
+    <Category>Công nghệ</Category>
+    <Quantity>10</Quantity>
+    <ISBN>978-6041234567</ISBN>
+    <Description>Sách hướng dẫn lập trình C# từ cơ bản đến nâng cao</Description>
+  </Book>
+  <Book>
+    <BookID>15</BookID>
+    <Title>Lập trình C# cơ bản</Title>
+    <Author>Nguyễn Văn A</Author>
+    <Publisher>NXB Giáo dục</Publisher>
+    <PublishYear>2023</PublishYear>
+    <Category>Công nghệ</Category>
+    <Quantity>10</Quantity>
+    <ISBN>978-6041234567</ISBN>
+    <Description>Sách hướng dẫn lập trình C# từ cơ bản đến nâng cao</Description>
+  </Book>
+  <Book>
+    <BookID>16</BookID>
+    <Title>Lập trình C# cơ bản</Title>
+    <Author>Nguyễn Văn A</Author>
+    <Publisher>NXB Giáo dục</Publisher>
+    <PublishYear>2023</PublishYear>
+    <Category>Công nghệ</Category>
+    <Quantity>10</Quantity>
+    <ISBN>978-6041234567</ISBN>
+    <Description>Sách hướng dẫn lập trình C# từ cơ bản đến nâng cao</Description>
+  </Book>
+  <Book>
+    <BookID>17</BookID>
+    <Title>Lập trình C# cơ bản</Title>
+    <Author>Nguyễn Văn A</Author>
+    <Publisher>NXB Giáo dục</Publisher>
+    <PublishYear>2023</PublishYear>
+    <Category>Công nghệ</Category>
+    <Quantity>10</Quantity>
+    <ISBN>978-6041234567</ISBN>
+    <Description>Sách hướng dẫn lập trình C# từ cơ bản đến nâng cao</Description>
+  </Book>
+  <Book>
+    <BookID>18</BookID>
+    <Title>Nhâp môn kinh doanh</Title>
+    <Author>Trần Thanh Đạo</Author>
+    <Publisher>GG</Publisher>
+    <PublishYear>2022</PublishYear>
+    <Category>Sách</Category>
+    <Quantity>12</Quantity>
+    <ISBN>123321</ISBN>
+    <Description>Rất hay</Description>
+  </Book>
+</Library>

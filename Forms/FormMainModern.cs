@@ -32,7 +32,7 @@ namespace LibraryManagement.Forms
             this.WindowState = FormWindowState.Maximized;
             this.BackColor = ModernUIHelper.Colors.Light;
 
-            // === SIDEBAR ===
+            // === SIDEBAR DỌC BÊN TRÁI ===
             sidebarPanel = new Panel
             {
                 Dock = DockStyle.Left,
@@ -53,19 +53,21 @@ namespace LibraryManagement.Forms
                 Text = "📚",
                 Font = new Font("Segoe UI", 42),
                 ForeColor = Color.White,
-                Size = new Size(80, 80),
-                Location = new Point(100, 20),
-                TextAlign = ContentAlignment.MiddleCenter
+                Size = new Size(280, 60),
+                Location = new Point(0, 10),
+                TextAlign = ContentAlignment.MiddleCenter,
+                BackColor = Color.Transparent
             };
 
             Label lblAppName = new Label
             {
-                Text = "",
+                Text = "Thư Viện",
                 Font = new Font("Segoe UI", 16, FontStyle.Bold),
                 ForeColor = Color.White,
                 Size = new Size(280, 30),
-                Location = new Point(0, 85),
-                TextAlign = ContentAlignment.MiddleCenter
+                Location = new Point(0, 75),
+                TextAlign = ContentAlignment.MiddleCenter,
+                BackColor = Color.Transparent
             };
 
             logoPanel.Controls.AddRange(new Control[] { lblLogo, lblAppName });
@@ -101,7 +103,7 @@ namespace LibraryManagement.Forms
 
             userPanel.Controls.AddRange(new Control[] { avatarCircle, lblUserName, lblUserRole });
 
-            // Menu items
+            // Menu items - DỌC TỪ TRÊN XUỐNG
             FlowLayoutPanel menuPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -117,7 +119,16 @@ namespace LibraryManagement.Forms
             menuPanel.Controls.Add(CreateMenuButton("📝", "Mượn/Trả Sách", false, (s, e) => OpenLoans()));
             menuPanel.Controls.Add(CreateMenuButton("📊", "Báo cáo Sách", false, (s, e) => OpenReports()));
             menuPanel.Controls.Add(CreateMenuButton("📈", "Báo cáo Mượn/Trả", false, (s, e) => OpenReportLoans()));
-            menuPanel.Controls.Add(CreateMenuButton("⚙️", "Cài đặt", false));
+            
+            // Separator
+            Panel separator = new Panel
+            {
+                Size = new Size(260, 2),
+                BackColor = Color.FromArgb(52, 73, 94),
+                Margin = new Padding(0, 10, 0, 10)
+            };
+            menuPanel.Controls.Add(separator);
+            
             menuPanel.Controls.Add(CreateMenuButton("❓", "Trợ giúp", false, (s, e) => ShowHelp()));
             menuPanel.Controls.Add(CreateMenuButton("🚪", "Đăng xuất", false, (s, e) => Logout()));
 
@@ -162,38 +173,52 @@ namespace LibraryManagement.Forms
 
             headerPanel.Controls.AddRange(new Control[] { lblWelcome, lblDate });
 
-            // Stats Panel (Top)
+            // Stats Panel (Top) - RESPONSIVE
             Panel statsPanel = new Panel
             {
                 Location = new Point(0, 120),
-                Size = new Size(1300, 140),
+                Height = 140,
                 BackColor = Color.Transparent,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                AutoScroll = false
             };
 
-            // 3 PANELS - MỖI PANEL 400px VỚI KHOẢNG CÁCH 30px
-            int panelWidth = 400;
-            int panelHeight = 700;
-            int spacing = 30;
+            // 3 PANELS - FIXED SIZE for scrolling
+            int spacing = 20;
             int startY = 280;
 
             // Quick Actions Panel (Middle Left)
             Panel quickActionsPanel = CreateQuickActionsPanel();
             quickActionsPanel.Location = new Point(0, startY);
-            quickActionsPanel.Size = new Size(panelWidth, panelHeight);
+            quickActionsPanel.Size = new Size(400, 400);
             quickActionsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left;
 
             // Recent Activities Panel (Middle Center)
             Panel recentPanel = CreateRecentActivitiesPanel();
-            recentPanel.Location = new Point(panelWidth + spacing, startY);
-            recentPanel.Size = new Size(panelWidth, panelHeight);
+            recentPanel.Location = new Point(420, startY);
+            recentPanel.Size = new Size(400, 500);
             recentPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left;
 
             // Statistics Panel (Middle Right)
             Panel statsChartPanel = CreateStatisticsPanel();
-            statsChartPanel.Location = new Point((panelWidth + spacing) * 2, startY);
-            statsChartPanel.Size = new Size(panelWidth, panelHeight);
+            statsChartPanel.Location = new Point(840, startY);
+            statsChartPanel.Size = new Size(400, 500);
             statsChartPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            
+            // Event để resize khi form thay đổi kích thước
+            contentPanel.Resize += (s, e) =>
+            {
+                int availableWidth = contentPanel.Width - 60;
+                int panelWidth = (availableWidth - (spacing * 2)) / 3;
+                
+                statsPanel.Width = availableWidth;
+                
+                quickActionsPanel.Width = panelWidth;
+                recentPanel.Width = panelWidth;
+                recentPanel.Left = panelWidth + spacing;
+                statsChartPanel.Width = panelWidth;
+                statsChartPanel.Left = (panelWidth + spacing) * 2;
+            };
 
             // Thêm controls theo đúng thứ tự
             contentPanel.Controls.Add(headerPanel);
@@ -262,33 +287,40 @@ namespace LibraryManagement.Forms
                 {
                     statsPanel.Controls.Clear();
 
-                    // MỖI CARD RỘNG 310px VỚI KHOẢNG CÁCH 20px
-                    int cardWidth = 310;
-                    int spacing = 20;
+                    // RESPONSIVE CARD WIDTH
+                    int availableWidth = statsPanel.Width > 0 ? statsPanel.Width : 1200;
+                    int cardSpacing = 15;
+                    int cardWidth = (availableWidth - (cardSpacing * 3)) / 4; // Chia đều cho 4 cards
+                    if (cardWidth < 200) cardWidth = 200; // Minimum width
+                    int cardHeight = 120;
 
                     Panel stat1 = CreateStatCard("📚", "Tổng sách",
                         dt.Rows[0]["TotalBooks"].ToString(),
                         dt.Rows[0]["TotalQuantity"].ToString() + " cuốn",
                         ModernUIHelper.Colors.Primary, 0);
-                    stat1.Size = new Size(cardWidth, 120);
+                    stat1.Size = new Size(cardWidth, cardHeight);
+                    stat1.Anchor = AnchorStyles.Top | AnchorStyles.Left;
 
                     Panel stat2 = CreateStatCard("👥", "Độc giả",
                         dt.Rows[0]["ActiveMembers"].ToString(),
                         "Đang hoạt động",
-                        ModernUIHelper.Colors.Success, cardWidth + spacing);
-                    stat2.Size = new Size(cardWidth, 120);
+                        ModernUIHelper.Colors.Success, cardWidth + cardSpacing);
+                    stat2.Size = new Size(cardWidth, cardHeight);
+                    stat2.Anchor = AnchorStyles.Top | AnchorStyles.Left;
 
                     Panel stat3 = CreateStatCard("📖", "Đang mượn",
                         dt.Rows[0]["CurrentLoans"].ToString(),
                         "Phiếu mượn",
-                        ModernUIHelper.Colors.Info, (cardWidth + spacing) * 2);
-                    stat3.Size = new Size(cardWidth, 120);
+                        ModernUIHelper.Colors.Info, (cardWidth + cardSpacing) * 2);
+                    stat3.Size = new Size(cardWidth, cardHeight);
+                    stat3.Anchor = AnchorStyles.Top | AnchorStyles.Left;
 
                     Panel stat4 = CreateStatCard("⚠️", "Quá hạn",
                         dt.Rows[0]["OverdueLoans"].ToString(),
                         "Cần xử lý",
-                        ModernUIHelper.Colors.Danger, (cardWidth + spacing) * 3);
-                    stat4.Size = new Size(cardWidth, 120);
+                        ModernUIHelper.Colors.Danger, (cardWidth + cardSpacing) * 3);
+                    stat4.Size = new Size(cardWidth, cardHeight);
+                    stat4.Anchor = AnchorStyles.Top | AnchorStyles.Left;
 
                     statsPanel.Controls.AddRange(new Control[] { stat1, stat2, stat3, stat4 });
                 }
@@ -398,20 +430,27 @@ namespace LibraryManagement.Forms
                 AutoSize = true
             };
 
-            // Buttons rộng hơn: 360px
+            // RESPONSIVE BUTTONS
+            int btnWidth = panel.Width - 40; // Panel width - padding
+            int btnHeight = 80;
+            int btnSpacing = 15;
+
             Button btnBooks = CreateQuickActionButton("📚", "Quản lý Sách",
                 ModernUIHelper.Colors.Primary, 20, 70);
-            btnBooks.Size = new Size(360, 90);
+            btnBooks.Size = new Size(btnWidth, btnHeight);
+            btnBooks.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             btnBooks.Click += (s, e) => OpenBooks();
 
             Button btnMembers = CreateQuickActionButton("👥", "Quản lý Độc giả",
-                ModernUIHelper.Colors.Success, 20, 175);
-            btnMembers.Size = new Size(360, 90);
+                ModernUIHelper.Colors.Success, 20, 70 + btnHeight + btnSpacing);
+            btnMembers.Size = new Size(btnWidth, btnHeight);
+            btnMembers.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             btnMembers.Click += (s, e) => OpenMembers();
 
             Button btnLoans = CreateQuickActionButton("📝", "Mượn/Trả Sách",
-                ModernUIHelper.Colors.Info, 20, 280);
-            btnLoans.Size = new Size(360, 90);
+                ModernUIHelper.Colors.Info, 20, 70 + (btnHeight + btnSpacing) * 2);
+            btnLoans.Size = new Size(btnWidth, btnHeight);
+            btnLoans.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             btnLoans.Click += (s, e) => OpenLoans();
 
             panel.Controls.AddRange(new Control[] { lblTitle, btnBooks, btnMembers, btnLoans });
@@ -423,15 +462,15 @@ namespace LibraryManagement.Forms
         {
             Button btn = new Button
             {
-                Text = $"{icon}\n\n{text}",
-                Size = new Size(360, 90),
+                Text = $"{icon}  {text}",
                 Location = new Point(x, y),
                 BackColor = color,
                 ForeColor = Color.White,
-                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
                 FlatStyle = FlatStyle.Flat,
                 Cursor = Cursors.Hand,
-                TextAlign = ContentAlignment.MiddleCenter
+                TextAlign = ContentAlignment.MiddleLeft,
+                Padding = new Padding(20, 0, 0, 0)
             };
 
             btn.FlatAppearance.BorderSize = 0;
@@ -504,21 +543,21 @@ namespace LibraryManagement.Forms
                 if (dt.Rows.Count > 0)
                 {
                     int yPos = 70;
-                    int itemHeight = 80;  // Height của mỗi stat item
-                    int spacing = 12;
+                    int itemHeight = 70;  // Giảm height
+                    int spacing = 10;     // Giảm spacing
 
                     // Categories
                     Panel cat = CreateStatItem("📚", "Thể loại sách",
                         dt.Rows[0]["Categories"].ToString(),
-                        ModernUIHelper.Colors.Primary, yPos);
+                        ModernUIHelper.Colors.Primary, yPos, panel.Width - 40);
                     panel.Controls.Add(cat);
 
                     // Authors
-                    yPos += itemHeight + spacing; // 80 + 12 = 92
+                    yPos += itemHeight + spacing;
 
                     Panel auth = CreateStatItem("✍️", "Tác giả",
                         dt.Rows[0]["Authors"].ToString(),
-                        ModernUIHelper.Colors.Success, yPos);
+                        ModernUIHelper.Colors.Success, yPos, panel.Width - 40);
                     panel.Controls.Add(auth);
 
                     // This month loans
@@ -526,7 +565,7 @@ namespace LibraryManagement.Forms
 
                     Panel month = CreateStatItem("📅", "Mượn tháng này",
                         dt.Rows[0]["ThisMonth"].ToString(),
-                        ModernUIHelper.Colors.Info, yPos);
+                        ModernUIHelper.Colors.Info, yPos, panel.Width - 40);
                     panel.Controls.Add(month);
 
                     // This year loans
@@ -534,28 +573,29 @@ namespace LibraryManagement.Forms
 
                     Panel year = CreateStatItem("📆", "Mượn năm nay",
                         dt.Rows[0]["ThisYear"].ToString(),
-                        ModernUIHelper.Colors.Warning, yPos);
+                        ModernUIHelper.Colors.Warning, yPos, panel.Width - 40);
                     panel.Controls.Add(year);
 
                     // New members
-                                        yPos += itemHeight + spacing;
+                    yPos += itemHeight + spacing;
 
                     Panel newMem = CreateStatItem("👤", "ĐG mới tháng này",
                         dt.Rows[0]["NewMembers"].ToString(),
-                        ModernUIHelper.Colors.Success, yPos);
+                        ModernUIHelper.Colors.Success, yPos, panel.Width - 40);
                     panel.Controls.Add(newMem);
                 }
             }
             catch { }
         }
 
-        private Panel CreateStatItem(string icon, string label, string value, Color color, int y)
+        private Panel CreateStatItem(string icon, string label, string value, Color color, int y, int width)
         {
             Panel panel = new Panel
             {
                 Location = new Point(20, y),
-                Size = new Size(360, 80),
-                BackColor = Color.FromArgb(248, 249, 250)
+                Size = new Size(width, 70),
+                BackColor = Color.FromArgb(248, 249, 250),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
 
             panel.Paint += (s, e) =>
@@ -570,10 +610,10 @@ namespace LibraryManagement.Forms
             Label lblIcon = new Label
             {
                 Text = icon,
-                Font = new Font("Segoe UI", 24),
+                Font = new Font("Segoe UI", 20),
                 ForeColor = color,
-                Location = new Point(15, 15),
-                Size = new Size(50, 50),
+                Location = new Point(15, 12),
+                Size = new Size(40, 40),
                 BackColor = Color.Transparent
             };
 
@@ -582,17 +622,17 @@ namespace LibraryManagement.Forms
                 Text = label,
                 Font = new Font("Segoe UI", 9),
                 ForeColor = ModernUIHelper.Colors.Gray,
-                Location = new Point(75, 12),
-                Size = new Size(200, 20),
+                Location = new Point(65, 10),
+                Size = new Size(width - 150, 20),
                 BackColor = Color.Transparent
             };
 
             Label lblValue = new Label
             {
                 Text = value,
-                Font = new Font("Segoe UI", 18, FontStyle.Bold),
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
                 ForeColor = color,
-                Location = new Point(75, 28),
+                Location = new Point(65, 28),
                 AutoSize = true,
                 BackColor = Color.Transparent
             };
@@ -642,7 +682,7 @@ namespace LibraryManagement.Forms
         {
             try
             {
-                string query = @"SELECT TOP 7
+                string query = @"SELECT TOP 8
                     L.LoanID,
                     B.Title AS BookTitle,
                     M.FullName AS MemberName,
@@ -656,6 +696,7 @@ namespace LibraryManagement.Forms
                 DataTable dt = DatabaseHelper.ExecuteQuery(query);
 
                 int yPos = 70;
+                int itemWidth = panel.Width - 40;
                 foreach (DataRow row in dt.Rows)
                 {
                     Panel activity = CreateActivityItem(
@@ -663,21 +704,24 @@ namespace LibraryManagement.Forms
                         row["MemberName"].ToString(),
                         Convert.ToDateTime(row["LoanDate"]),
                         row["Status"].ToString(),
-                        yPos
+                        yPos,
+                        itemWidth
                     );
                     panel.Controls.Add(activity);
-                    yPos += 42 + 8;                }
+                    yPos += 55;  // Giảm spacing
+                }
             }
             catch { }
         }
 
-        private Panel CreateActivityItem(string bookTitle, string memberName, DateTime date, string status, int y)
+        private Panel CreateActivityItem(string bookTitle, string memberName, DateTime date, string status, int y, int width)
         {
             Panel panel = new Panel
             {
                 Location = new Point(20, y),
-                Size = new Size(360, 42),
-                BackColor = Color.FromArgb(248, 249, 250)
+                Size = new Size(width, 50),
+                BackColor = Color.FromArgb(248, 249, 250),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
 
             panel.Paint += (s, e) =>
@@ -695,28 +739,30 @@ namespace LibraryManagement.Forms
             {
                 Text = icon,
                 Font = new Font("Segoe UI", 16),
-                Location = new Point(10, 8),
+                Location = new Point(10, 12),
                 Size = new Size(30, 25),
                 BackColor = Color.Transparent
             };
 
+            int maxBookLength = (width - 120) / 8; // Tính toán độ dài tối đa dựa trên width
             Label lblBook = new Label
             {
-                Text = bookTitle.Length > 22 ? bookTitle.Substring(0, 22) + "..." : bookTitle,
+                Text = bookTitle.Length > maxBookLength ? bookTitle.Substring(0, maxBookLength) + "..." : bookTitle,
                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
                 ForeColor = ModernUIHelper.Colors.Dark,
-                Location = new Point(45, 5),
-                Size = new Size(250, 15),
+                Location = new Point(45, 8),
+                Size = new Size(width - 120, 18),
                 BackColor = Color.Transparent
             };
 
+            int maxMemberLength = (width - 140) / 8;
             Label lblMember = new Label
             {
-                Text = memberName.Length > 24 ? memberName.Substring(0, 24) + "..." : memberName,
+                Text = memberName.Length > maxMemberLength ? memberName.Substring(0, maxMemberLength) + "..." : memberName,
                 Font = new Font("Segoe UI", 8),
                 ForeColor = ModernUIHelper.Colors.Gray,
-                Location = new Point(45, 22),
-                Size = new Size(180, 15),
+                Location = new Point(45, 26),
+                Size = new Size(width - 140, 15),
                 BackColor = Color.Transparent
             };
 
@@ -725,7 +771,7 @@ namespace LibraryManagement.Forms
                 Text = date.ToString("dd/MM"),
                 Font = new Font("Segoe UI", 8),
                 ForeColor = ModernUIHelper.Colors.Gray,
-                Location = new Point(290, 12),
+                Location = new Point(width - 70, 18),
                 Size = new Size(60, 15),
                 TextAlign = ContentAlignment.MiddleRight,
                 BackColor = Color.Transparent

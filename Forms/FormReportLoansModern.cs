@@ -44,21 +44,26 @@ namespace LibraryManagement.Forms
                 Dock = DockStyle.Top,
                 Height = 80,
                 BackColor = Color.White,
-                Padding = new Padding(30, 15, 30, 15)
+                Padding = new Padding(30, 15, 30, 15),
+                AutoScroll = true
             };
+
+            Button btnBack = ModernUIHelper.CreateIconButton("◀", "Quay lại", ModernUIHelper.Colors.Gray, 120);
+            btnBack.Location = new Point(0, 17);
+            btnBack.Click += (s, e) => this.Close();
 
             Label lblFrom = new Label
             {
                 Text = "Từ ngày:",
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                Location = new Point(30, 25),
+                Location = new Point(130, 25),
                 AutoSize = true
             };
 
             Panel dtpFromPanel = new Panel
             {
-                Location = new Point(110, 20),
-                Size = new Size(180, 40),
+                Location = new Point(200, 20),
+                Size = new Size(160, 40),
                 BackColor = ModernUIHelper.Colors.Light
             };
             dtpFromPanel.Paint += (s, e) =>
@@ -73,8 +78,8 @@ namespace LibraryManagement.Forms
             dtpFrom = new DateTimePicker
             {
                 Location = new Point(10, 8),
-                Size = new Size(160, 25),
-                Font = new Font("Segoe UI", 10),
+                Size = new Size(140, 25),
+                Font = new Font("Segoe UI", 9),
                 Format = DateTimePickerFormat.Short,
                 Value = DateTime.Now.AddMonths(-1)
             };
@@ -84,14 +89,14 @@ namespace LibraryManagement.Forms
             {
                 Text = "Đến ngày:",
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                Location = new Point(310, 25),
+                Location = new Point(370, 25),
                 AutoSize = true
             };
 
             Panel dtpToPanel = new Panel
             {
-                Location = new Point(400, 20),
-                Size = new Size(180, 40),
+                Location = new Point(450, 20),
+                Size = new Size(160, 40),
                 BackColor = ModernUIHelper.Colors.Light
             };
             dtpToPanel.Paint += (s, e) =>
@@ -106,8 +111,8 @@ namespace LibraryManagement.Forms
             dtpTo = new DateTimePicker
             {
                 Location = new Point(10, 8),
-                Size = new Size(160, 25),
-                Font = new Font("Segoe UI", 10),
+                Size = new Size(140, 25),
+                Font = new Font("Segoe UI", 9),
                 Format = DateTimePickerFormat.Short,
                 Value = DateTime.Now
             };
@@ -117,14 +122,14 @@ namespace LibraryManagement.Forms
             {
                 Text = "Trạng thái:",
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                Location = new Point(600, 25),
+                Location = new Point(620, 25),
                 AutoSize = true
             };
 
             Panel cboPanel = new Panel
             {
-                Location = new Point(700, 20),
-                Size = new Size(150, 40),
+                Location = new Point(710, 20),
+                Size = new Size(140, 40),
                 BackColor = ModernUIHelper.Colors.Light
             };
             cboPanel.Paint += (s, e) =>
@@ -139,8 +144,8 @@ namespace LibraryManagement.Forms
             cboStatus = new ComboBox
             {
                 Location = new Point(10, 8),
-                Size = new Size(130, 25),
-                Font = new Font("Segoe UI", 10),
+                Size = new Size(120, 25),
+                Font = new Font("Segoe UI", 9),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 FlatStyle = FlatStyle.Flat
             };
@@ -149,16 +154,16 @@ namespace LibraryManagement.Forms
             cboStatus.SelectedIndexChanged += (s, e) => FilterData();
             cboPanel.Controls.Add(cboStatus);
 
-            Button btnFilter = ModernUIHelper.CreateIconButton("🔍", "Lọc", ModernUIHelper.Colors.Primary, 120);
-            btnFilter.Location = new Point(870, 17);
+            Button btnFilter = ModernUIHelper.CreateIconButton("🔍", "Lọc", ModernUIHelper.Colors.Primary, 110);
+            btnFilter.Location = new Point(860, 17);
             btnFilter.Click += (s, e) => LoadData();
 
-            Button btnRefresh = ModernUIHelper.CreateIconButton("🔄", "Làm mới", ModernUIHelper.Colors.Success, 130);
-            btnRefresh.Location = new Point(1010, 17);
+            Button btnRefresh = ModernUIHelper.CreateIconButton("🔄", "Làm mới", ModernUIHelper.Colors.Success, 120);
+            btnRefresh.Location = new Point(980, 17);
             btnRefresh.Click += (s, e) => { dtpFrom.Value = DateTime.Now.AddMonths(-1); dtpTo.Value = DateTime.Now; LoadData(); };
 
             toolbar.Controls.AddRange(new Control[] { 
-                lblFrom, dtpFromPanel, lblTo, dtpToPanel, 
+                btnBack, lblFrom, dtpFromPanel, lblTo, dtpToPanel, 
                 lblStatus, cboPanel, btnFilter, btnRefresh 
             });
 
@@ -167,26 +172,29 @@ namespace LibraryManagement.Forms
             {
                 Dock = DockStyle.Fill,
                 Padding = new Padding(30, 20, 30, 30),
-                BackColor = ModernUIHelper.Colors.Light
+                BackColor = ModernUIHelper.Colors.Light,
+                AutoScroll = true
             };
 
-            // Stats Panel
+            // Stats Panel - RESPONSIVE
             statsPanel = new Panel
             {
                 Location = new Point(30, 20),
-                Size = new Size(1300, 140),
+                Size = new Size(1200, 140),
+                Height = 140,
                 BackColor = Color.Transparent,
                 Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
 
-            // DataGridView
+            // DataGridView - RESPONSIVE WIDTH, FIXED HEIGHT for scrolling
             Panel dgvContainer = new Panel
             {
                 Location = new Point(30, 180),
-                Size = new Size(1300, 550),
+                Size = new Size(1200, 500),
                 BackColor = Color.White,
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
+            
             dgvContainer.Paint += (s, e) =>
             {
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -199,12 +207,20 @@ namespace LibraryManagement.Forms
             dgvReport = new DataGridView
             {
                 Location = new Point(15, 15),
-                Size = new Size(1270, 520),
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+                Size = new Size(1170, 470),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
+            
             ModernUIHelper.StyleDataGridView(dgvReport, ModernUIHelper.Colors.Info);
 
             dgvContainer.Controls.Add(dgvReport);
+            
+            // Event resize
+            contentPanel.Resize += (s, e) =>
+            {
+                statsPanel.Width = contentPanel.Width - 60;
+                dgvContainer.Width = contentPanel.Width - 60;
+            };
             contentPanel.Controls.AddRange(new Control[] { statsPanel, dgvContainer });
 
             this.Controls.Add(contentPanel);
@@ -233,21 +249,29 @@ namespace LibraryManagement.Forms
                 {
                     statsPanel.Controls.Clear();
 
+                    // RESPONSIVE STAT CARDS
+                    int cardWidth = (statsPanel.Width - 60) / 4;
+                    int cardSpacing = 20;
+
                     Panel stat1 = CreateStatCard("📚 Tổng phiếu mượn", 
                         dtStats.Rows[0]["TotalLoans"].ToString(), 
                         ModernUIHelper.Colors.Primary, 0);
+                    stat1.Width = cardWidth;
 
                     Panel stat2 = CreateStatCard("📖 Đang mượn", 
                         dtStats.Rows[0]["Borrowed"].ToString(), 
-                        ModernUIHelper.Colors.Success, 320);
+                        ModernUIHelper.Colors.Success, cardWidth + cardSpacing);
+                    stat2.Width = cardWidth;
 
                     Panel stat3 = CreateStatCard("✅ Đã trả", 
                         dtStats.Rows[0]["Returned"].ToString(), 
-                        ModernUIHelper.Colors.Info, 640);
+                        ModernUIHelper.Colors.Info, (cardWidth + cardSpacing) * 2);
+                    stat3.Width = cardWidth;
 
                     Panel stat4 = CreateStatCard("⚠️ Quá hạn", 
                         dtStats.Rows[0]["Overdue"].ToString(), 
-                        ModernUIHelper.Colors.Danger, 960);
+                        ModernUIHelper.Colors.Danger, (cardWidth + cardSpacing) * 3);
+                    stat4.Width = cardWidth;
 
                     statsPanel.Controls.AddRange(new Control[] { stat1, stat2, stat3, stat4 });
                 }

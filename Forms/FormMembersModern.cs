@@ -47,11 +47,16 @@ namespace LibraryManagement.Forms
                 Dock = DockStyle.Top,
                 Height = 90,
                 BackColor = Color.White,
-                Padding = new Padding(30, 20, 30, 20)
+                Padding = new Padding(30, 20, 30, 20),
+                AutoScroll = true
             };
 
-            Panel searchBox = ModernUIHelper.CreateSearchBox("Tìm kiếm theo tên, email, số điện thoại...", 400);
-            searchBox.Location = new Point(30, 20);
+            Button btnBack = ModernUIHelper.CreateIconButton("◀", "Quay lại", ModernUIHelper.Colors.Gray, 120);
+            btnBack.Location = new Point(0, 20);
+            btnBack.Click += (s, e) => this.Close();
+
+            Panel searchBox = ModernUIHelper.CreateSearchBox("Tìm kiếm theo tên, email, số điện thoại...", 350);
+            searchBox.Location = new Point(130, 20);
             txtSearch = (TextBox)searchBox.Tag;
             txtSearch.TextChanged += (s, e) =>
             {
@@ -59,32 +64,32 @@ namespace LibraryManagement.Forms
                     SearchMembers();
             };
 
-            Button btnAdd = ModernUIHelper.CreateIconButton("➕", "Thêm", ModernUIHelper.Colors.Success, 120);
-            btnAdd.Location = new Point(460, 20);
+            Button btnAdd = ModernUIHelper.CreateIconButton("➕", "Thêm", ModernUIHelper.Colors.Success, 110);
+            btnAdd.Location = new Point(490, 20);
             btnAdd.Click += BtnAdd_Click;
 
-            Button btnEdit = ModernUIHelper.CreateIconButton("✏️", "Sửa", ModernUIHelper.Colors.Primary, 120);
-            btnEdit.Location = new Point(600, 20);
+            Button btnEdit = ModernUIHelper.CreateIconButton("✏️", "Sửa", ModernUIHelper.Colors.Primary, 110);
+            btnEdit.Location = new Point(610, 20);
             btnEdit.Click += BtnEdit_Click;
 
-            Button btnDelete = ModernUIHelper.CreateIconButton("🗑️", "Xóa", ModernUIHelper.Colors.Danger, 120);
-            btnDelete.Location = new Point(740, 20);
+            Button btnDelete = ModernUIHelper.CreateIconButton("🗑️", "Xóa", ModernUIHelper.Colors.Danger, 110);
+            btnDelete.Location = new Point(730, 20);
             btnDelete.Click += BtnDelete_Click;
 
-            Button btnRefresh = ModernUIHelper.CreateIconButton("🔄", "Làm mới", ModernUIHelper.Colors.Gray, 130);
-            btnRefresh.Location = new Point(880, 20);
+            Button btnRefresh = ModernUIHelper.CreateIconButton("🔄", "Làm mới", ModernUIHelper.Colors.Gray, 120);
+            btnRefresh.Location = new Point(850, 20);
             btnRefresh.Click += (s, e) => LoadData();
 
-            Button btnExport = ModernUIHelper.CreateIconButton("📤", "Export", ModernUIHelper.Colors.Warning, 130);
-            btnExport.Location = new Point(1030, 20);
+            Button btnExport = ModernUIHelper.CreateIconButton("📤", "Export", ModernUIHelper.Colors.Warning, 120);
+            btnExport.Location = new Point(980, 20);
             btnExport.Click += BtnExport_Click;
 
-            Button btnImport = ModernUIHelper.CreateIconButton("📥", "Import", ModernUIHelper.Colors.Info, 130);
-            btnImport.Location = new Point(1180, 20);
+            Button btnImport = ModernUIHelper.CreateIconButton("📥", "Import", ModernUIHelper.Colors.Info, 120);
+            btnImport.Location = new Point(1110, 20);
             btnImport.Click += BtnImport_Click;
 
             toolbar.Controls.AddRange(new Control[] {
-                searchBox, btnAdd, btnEdit, btnDelete, btnRefresh, btnExport, btnImport
+                btnBack, searchBox, btnAdd, btnEdit, btnDelete, btnRefresh, btnExport, btnImport
             });
 
             // Content area
@@ -92,17 +97,22 @@ namespace LibraryManagement.Forms
             {
                 Dock = DockStyle.Fill,
                 Padding = new Padding(30, 20, 30, 30),
-                BackColor = ModernUIHelper.Colors.Light
+                BackColor = ModernUIHelper.Colors.Light,
+                AutoScroll = true
             };
 
-            // DataGridView container
+            // DataGridView container - RESPONSIVE WIDTH, FIXED HEIGHT for scrolling
+            int detailsPanelWidth = 450;
+            int spacing = 20;
+            
             Panel dgvContainer = new Panel
             {
                 Location = new Point(30, 20),
-                Size = new Size(1000, 700),
+                Size = new Size(900, 700),
                 BackColor = Color.White,
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
+            
             dgvContainer.Paint += (s, e) =>
             {
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -115,21 +125,31 @@ namespace LibraryManagement.Forms
             dgvMembers = new DataGridView
             {
                 Location = new Point(15, 15),
-                Size = new Size(970, 670),
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+                Size = new Size(870, 670),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
+            
             ModernUIHelper.StyleDataGridView(dgvMembers, ModernUIHelper.Colors.Success);
             dgvMembers.SelectionChanged += DgvMembers_SelectionChanged;
 
             dgvContainer.Controls.Add(dgvMembers);
 
-            // Details panel
+            // Details panel - RESPONSIVE WIDTH, FIXED HEIGHT for scrolling
             detailsPanel = new Panel
             {
-                Location = new Point(1050, 20),
-                Size = new Size(480, 700),
+                Location = new Point(950, 20),
+                Size = new Size(detailsPanelWidth, 700),
                 BackColor = Color.White,
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                AutoScroll = true
+            };
+            
+            // Event resize
+            contentPanel.Resize += (s, e) =>
+            {
+                int availableWidth = contentPanel.Width - 60;
+                dgvContainer.Width = availableWidth - detailsPanelWidth - spacing;
+                detailsPanel.Left = dgvContainer.Right + spacing;
             };
             detailsPanel.Paint += (s, e) =>
             {
@@ -150,19 +170,19 @@ namespace LibraryManagement.Forms
             };
 
             int yPos = 70;
-            int spacing = 75;
+            int fieldSpacing = 75;
 
             txtMemberID = CreateDetailField("ID Độc giả:", yPos, true);
-            txtFullName = CreateDetailField("Họ và tên:", yPos += spacing);
-            txtEmail = CreateDetailField("Email:", yPos += spacing);
-            txtPhone = CreateDetailField("Số điện thoại:", yPos += spacing);
+            txtFullName = CreateDetailField("Họ và tên:", yPos += fieldSpacing);
+            txtEmail = CreateDetailField("Email:", yPos += fieldSpacing);
+            txtPhone = CreateDetailField("Số điện thoại:", yPos += fieldSpacing);
 
             Label lblAddress = new Label
             {
                 Text = "Địa chỉ:",
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 ForeColor = ModernUIHelper.Colors.Dark,
-                Location = new Point(20, yPos += spacing),
+                Location = new Point(20, yPos += fieldSpacing),
                 AutoSize = true
             };
 
@@ -330,12 +350,27 @@ namespace LibraryManagement.Forms
                 if (dgvMembers.Columns.Count > 0)
                 {
                     dgvMembers.Columns["MemberID"].HeaderText = "ID";
+                    dgvMembers.Columns["MemberID"].Width = 60;
+                    
                     dgvMembers.Columns["FullName"].HeaderText = "Họ tên";
+                    dgvMembers.Columns["FullName"].Width = 180;
+                    
                     dgvMembers.Columns["Email"].HeaderText = "Email";
+                    dgvMembers.Columns["Email"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dgvMembers.Columns["Email"].FillWeight = 150;
+                    
                     dgvMembers.Columns["Phone"].HeaderText = "Điện thoại";
+                    dgvMembers.Columns["Phone"].Width = 120;
+                    
                     dgvMembers.Columns["Address"].HeaderText = "Địa chỉ";
+                    dgvMembers.Columns["Address"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dgvMembers.Columns["Address"].FillWeight = 150;
+                    
                     dgvMembers.Columns["JoinDate"].HeaderText = "Ngày tham gia";
+                    dgvMembers.Columns["JoinDate"].Width = 120;
+                    
                     dgvMembers.Columns["Status"].HeaderText = "Trạng thái";
+                    dgvMembers.Columns["Status"].Width = 100;
                 }
 
                 ClearInputs();

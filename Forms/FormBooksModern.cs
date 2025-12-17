@@ -46,11 +46,16 @@ namespace LibraryManagement.Forms
                 Dock = DockStyle.Top,
                 Height = 90,
                 BackColor = Color.White,
-                Padding = new Padding(30, 20, 30, 20)
+                Padding = new Padding(30, 20, 30, 20),
+                AutoScroll = true
             };
 
-            Panel searchBox = ModernUIHelper.CreateSearchBox("Tìm kiếm sách theo tên, tác giả, thể loại...", 400);
-            searchBox.Location = new Point(30, 20);
+            Button btnBack = ModernUIHelper.CreateIconButton("◀", "Quay lại", ModernUIHelper.Colors.Gray, 120);
+            btnBack.Location = new Point(0, 20);
+            btnBack.Click += (s, e) => this.Close();
+
+            Panel searchBox = ModernUIHelper.CreateSearchBox("Tìm kiếm sách theo tên, tác giả, thể loại...", 350);
+            searchBox.Location = new Point(130, 20);
             txtSearch = (TextBox)searchBox.Tag;
             txtSearch.TextChanged += (s, e) =>
             {
@@ -58,32 +63,32 @@ namespace LibraryManagement.Forms
                     SearchBooks();
             };
 
-            Button btnAdd = ModernUIHelper.CreateIconButton("➕", "Thêm", ModernUIHelper.Colors.Success, 120);
-            btnAdd.Location = new Point(460, 20);
+            Button btnAdd = ModernUIHelper.CreateIconButton("➕", "Thêm", ModernUIHelper.Colors.Success, 110);
+            btnAdd.Location = new Point(490, 20);
             btnAdd.Click += BtnAdd_Click;
 
-            Button btnEdit = ModernUIHelper.CreateIconButton("✏️", "Sửa", ModernUIHelper.Colors.Primary, 120);
-            btnEdit.Location = new Point(600, 20);
+            Button btnEdit = ModernUIHelper.CreateIconButton("✏️", "Sửa", ModernUIHelper.Colors.Primary, 110);
+            btnEdit.Location = new Point(610, 20);
             btnEdit.Click += BtnEdit_Click;
 
-            Button btnDelete = ModernUIHelper.CreateIconButton("🗑️", "Xóa", ModernUIHelper.Colors.Danger, 120);
-            btnDelete.Location = new Point(740, 20);
+            Button btnDelete = ModernUIHelper.CreateIconButton("🗑️", "Xóa", ModernUIHelper.Colors.Danger, 110);
+            btnDelete.Location = new Point(730, 20);
             btnDelete.Click += BtnDelete_Click;
 
-            Button btnRefresh = ModernUIHelper.CreateIconButton("🔄", "Làm mới", ModernUIHelper.Colors.Gray, 130);
-            btnRefresh.Location = new Point(880, 20);
+            Button btnRefresh = ModernUIHelper.CreateIconButton("🔄", "Làm mới", ModernUIHelper.Colors.Gray, 120);
+            btnRefresh.Location = new Point(850, 20);
             btnRefresh.Click += (s, e) => LoadData();
 
-            Button btnExport = ModernUIHelper.CreateIconButton("📤", "Export", ModernUIHelper.Colors.Warning, 130);
-            btnExport.Location = new Point(1030, 20);
+            Button btnExport = ModernUIHelper.CreateIconButton("📤", "Export", ModernUIHelper.Colors.Warning, 120);
+            btnExport.Location = new Point(980, 20);
             btnExport.Click += BtnExport_Click;
 
-            Button btnImport = ModernUIHelper.CreateIconButton("📥", "Import", ModernUIHelper.Colors.Info, 130);
-            btnImport.Location = new Point(1180, 20);
+            Button btnImport = ModernUIHelper.CreateIconButton("📥", "Import", ModernUIHelper.Colors.Info, 120);
+            btnImport.Location = new Point(1110, 20);
             btnImport.Click += BtnImport_Click;
 
             toolbar.Controls.AddRange(new Control[] {
-                searchBox, btnAdd, btnEdit, btnDelete, btnRefresh, btnExport, btnImport
+                btnBack, searchBox, btnAdd, btnEdit, btnDelete, btnRefresh, btnExport, btnImport
             });
 
             // Content area
@@ -91,17 +96,22 @@ namespace LibraryManagement.Forms
             {
                 Dock = DockStyle.Fill,
                 Padding = new Padding(30, 20, 30, 30),
-                BackColor = ModernUIHelper.Colors.Light
+                BackColor = ModernUIHelper.Colors.Light,
+                AutoScroll = true
             };
 
-            // DataGridView container
+            // DataGridView container - RESPONSIVE WIDTH, FIXED HEIGHT for scrolling
+            int detailsPanelWidth = 450;
+            int spacing = 20;
+            
             Panel dgvContainer = new Panel
             {
                 Location = new Point(30, 20),
-                Size = new Size(1000, 700),
+                Size = new Size(900, 700), // Fixed height for scrolling
                 BackColor = Color.White,
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
+            
             dgvContainer.Paint += (s, e) =>
             {
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -114,21 +124,31 @@ namespace LibraryManagement.Forms
             dgvBooks = new DataGridView
             {
                 Location = new Point(15, 15),
-                Size = new Size(970, 670),
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right
+                Size = new Size(870, 670),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
             };
+            
             ModernUIHelper.StyleDataGridView(dgvBooks, ModernUIHelper.Colors.Primary);
             dgvBooks.SelectionChanged += DgvBooks_SelectionChanged;
 
             dgvContainer.Controls.Add(dgvBooks);
 
-            // Details panel
+            // Details panel - RESPONSIVE WIDTH, FIXED HEIGHT for scrolling
             detailsPanel = new Panel
             {
-                Location = new Point(1050, 20),
-                Size = new Size(480, 700),
+                Location = new Point(950, 20),
+                Size = new Size(detailsPanelWidth, 700),
                 BackColor = Color.White,
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                AutoScroll = true
+            };
+            
+            // Event resize để điều chỉnh vị trí
+            contentPanel.Resize += (s, e) =>
+            {
+                int availableWidth = contentPanel.Width - 60;
+                dgvContainer.Width = availableWidth - detailsPanelWidth - spacing;
+                detailsPanel.Left = dgvContainer.Right + spacing;
             };
             detailsPanel.Paint += (s, e) =>
             {
@@ -149,23 +169,23 @@ namespace LibraryManagement.Forms
             };
 
             int yPos = 70;
-            int spacing = 75;
+            int fieldSpacing = 75;
 
             txtBookID = CreateDetailField("ID Sách:", yPos, true);
-            txtTitle = CreateDetailField("Tên sách:", yPos += spacing);
-            txtAuthor = CreateDetailField("Tác giả:", yPos += spacing);
-            txtPublisher = CreateDetailField("Nhà xuất bản:", yPos += spacing);
-            txtPublishYear = CreateDetailField("Năm xuất bản:", yPos += spacing);
-            txtCategory = CreateDetailField("Thể loại:", yPos += spacing);
-            txtQuantity = CreateDetailField("Số lượng:", yPos += spacing);
-            txtISBN = CreateDetailField("ISBN:", yPos += spacing);
+            txtTitle = CreateDetailField("Tên sách:", yPos += fieldSpacing);
+            txtAuthor = CreateDetailField("Tác giả:", yPos += fieldSpacing);
+            txtPublisher = CreateDetailField("Nhà xuất bản:", yPos += fieldSpacing);
+            txtPublishYear = CreateDetailField("Năm xuất bản:", yPos += fieldSpacing);
+            txtCategory = CreateDetailField("Thể loại:", yPos += fieldSpacing);
+            txtQuantity = CreateDetailField("Số lượng:", yPos += fieldSpacing);
+            txtISBN = CreateDetailField("ISBN:", yPos += fieldSpacing);
 
             Label lblDesc = new Label
             {
                 Text = "Mô tả:",
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 ForeColor = ModernUIHelper.Colors.Dark,
-                Location = new Point(20, yPos += spacing),
+                Location = new Point(20, yPos += fieldSpacing),
                 AutoSize = true
             };
 
