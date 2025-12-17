@@ -15,7 +15,7 @@ namespace LibraryManagement.Helpers
         // ============================================================
 
         // Cách 1: Windows Authentication (Khuyên dùng - Không cần password)
-        private static string connectionString = @"Data Source=LAPTOP-FC7B59J6;Initial Catalog=LibraryManagement;User ID=sa;Password=123;TrustServerCertificate=True";
+        private static string connectionString = @"Data Source=DESKTOP-6F7FSVO;Initial Catalog=LibraryManagement;User ID=sa;Password=123;TrustServerCertificate=True";
 
         // Cách 2: SQL Server Authentication (Nếu có username/password)
         // private static string connectionString = @"Data Source=YOUR_SERVER_NAME;Initial Catalog=LibraryManagement;User ID=sa;Password=YOUR_PASSWORD";

@@ -49,28 +49,7 @@
     <Compile Include="Forms\FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormBooks.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\FormHelp.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormLoans.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormLogin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormMembers.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormReportBooks.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormReportLoans.cs">
       <SubType>Form</SubType>
     </Compile>
     <!-- Modern UI Forms - New Design -->
@@ -109,6 +88,7 @@
     <Compile Include="Helpers\DatabaseHelper.cs" />
     <Compile Include="Helpers\XMLHelper.cs" />
     <Compile Include="Helpers\ModernUIHelper.cs" />
+    <Compile Include="Helpers\XMLHelperExtensions.cs" />
     <!-- Models -->
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Loan.cs" />
@@ -121,26 +101,11 @@
     <EmbeddedResource Include="Forms\FormBookDialog.resx">
       <DependentUpon>FormBookDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormBooks.resx">
-      <DependentUpon>FormBooks.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormBooksModern.resx">
       <DependentUpon>FormBooksModern.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormLoans.resx">
-      <DependentUpon>FormLoans.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormLogin.resx">
-      <DependentUpon>FormLogin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormMain.resx">
-      <DependentUpon>FormMain.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormMainModern.resx">
       <DependentUpon>FormMainModern.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormMembers.resx">
-      <DependentUpon>FormMembers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

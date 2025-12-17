@@ -2,11 +2,6 @@ E:\XML\DoAnMonXML\bin\Debug\LibraryManagement.exe.config
 E:\XML\DoAnMonXML\bin\Debug\LibraryManagement.exe
 E:\XML\DoAnMonXML\bin\Debug\LibraryManagement.pdb
 E:\XML\DoAnMonXML\obj\Debug\LibraryManagement.csproj.AssemblyReference.cache
-E:\XML\DoAnMonXML\obj\Debug\LibraryManagement.Forms.FormBooks.resources
-E:\XML\DoAnMonXML\obj\Debug\LibraryManagement.Forms.FormLoans.resources
-E:\XML\DoAnMonXML\obj\Debug\LibraryManagement.Forms.FormLogin.resources
-E:\XML\DoAnMonXML\obj\Debug\LibraryManagement.Forms.FormMain.resources
-E:\XML\DoAnMonXML\obj\Debug\LibraryManagement.Forms.FormMembers.resources
 E:\XML\DoAnMonXML\obj\Debug\LibraryManagement.Properties.Resources.resources
 E:\XML\DoAnMonXML\obj\Debug\LibraryManagement.csproj.GenerateResource.cache
 E:\XML\DoAnMonXML\obj\Debug\LibraryManagement.csproj.CoreCompileInputs.cache
@@ -34,3 +29,4 @@ D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.exe
 D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.pdb
 D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.exe.config
 D:\CongNgheXMl\LibraryManagement\obj\Debug\LibraryManagement.Forms.FormBookDialog.resources
+E:\XML\DoAnMonXML\obj\Debug\LibraryManagement.Forms.FormBookDialog.resources
